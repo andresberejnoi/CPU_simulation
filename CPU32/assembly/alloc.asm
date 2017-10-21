@@ -39,7 +39,7 @@ save @11            #save the moving pointer at RAM[11]
 
 MAIN:
     #the program will return the address to the beginning of the empty space and
-    #it will also place a null terminator at the end of the array
+    #it will also add the ammount of space allocated in front of the buffer pointer
     
     #-------------------------------------------------------------
     #- Variables to use:
