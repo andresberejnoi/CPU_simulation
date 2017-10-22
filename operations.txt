@@ -1,0 +1,140 @@
+#The following are possible operations that can be performed with the ALU.
+#For now I will assume that the 32 bit registers have 4 control bits at the most significant locations
+
+B_31 B_30 B_29 B_28
+
+  0    0    0    0   -> logic 
+  
+  0000 = A & B
+  0001 = A | B
+  0010 = A ^ B  #XOR
+  0011 = ~A
+  0100 = returns 0
+  0101 = A == B
+  0110 = A < B
+  0111 = A > B
+  
+  1000 = A + B
+  1001 = A - B
+  1010
+  1011
+  1100
+  1101
+  1110
+  1111
+  
+  
+  Maybe we don't need that many instructions for the ALU, but some of the could
+  be for the CPU as in some instruction to load, some to save
+  Therefore, a new draft for instructions coming into the CPU will look different. 
+  This is a 32 bit computer, so there are 32 bit positions to work on. The particular
+  computer I am building with it will have at least 1000 RAM registers, so I need at 
+  least 10 bits to encode memory locations, but if nothing else gets used, then we could
+  easily allow more bits to go for memory allocation.
+  
+  Basic CPU operations:
+  - Restart Program Counter (PC) -> is it necessary? or maybe set register A to zero
+  - Load value into register A
+  - Save value in register A into memory
+  - Add value from memory to value in register A
+  - Subtract .. ... .. . .. . . . . . ...   .. . 
+  - Compare value in A with value in memory:
+    * A < B
+    * A > B
+    * A == B
+  - Logical Operations:
+    * A & B
+    * A | B
+    * A ^ B
+    * ~A
+  -Jump to address
+    
+    Codes (OpCode)  Operations
+    
+    0000            set A register to zero
+    0001            load 
+    0010            Save
+    0011            Add
+    0100            Sub
+    0101            A < B
+    0110            A > B
+    0111            A == B
+    1000            A & B
+    1001            A | B
+    1010            ~A
+    1011            A ^ B
+    1100            Jump
+    1101            loadi
+    1110            addi
+    1111            halt
+    
+    Then, let's say that we are leaving 16 bits for memory locations. 
+    That means that there are 12 extra bits to do something with. More
+    instructions could be added
+    
+    
+    On the other hand, the ALU could have bits separated for controls.
+    Example:
+    - A mode bit (M) to decide whether to do logic or arithmetic
+    - Two selection bits to tell whether the computer will do as planned in the following
+      manner:
+        * 00 -> Z = A
+        * 01 -> Z = 
+        
+        
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    The memory layout will be different than originally thought.
+    I will need to reserve some memory addresses for special registers. These registers
+    will be similar to the 32 special registers in MIPS
+    
+    The most significant bit will be used to determine if the instruction is normal
+    instruction or a conditional branch instruction.
+    
+    - In case of conditional branch, the simplest case can be the following layout:
+    
+        instruction  |  value2compare_address  | jump address
+            6-bits              5-bits                21-bits
+            
+        instruction  | register1  | register2  | jump address
+            6-bits        5-bits       5-bits       16-bits
+    
+    
+    - For normal instructions, we have the following:
+        
+        cpu_codes    | opcodes    | address
+          4-bits      4-bits      24-bits
+    
+    In that case, memory addresses will be:
+    
+    0000 0000 0000 0000 0000 0000 0000 0000
+    
+    
+    ============================================================================
+    Oct. 8th, 2017
+    
+    Even newer desgin. The most significant bits will be instruction bits.
+    
+    reg[31]: b31  //Decides whether to use the instruction with the A register or use register addresses as in MIPS
+    reg[30]: b30  //Tells the CPU if the instruction will go to the ALU or handled outside. 0 means ALU and 1 means CPU (i.e. load a value)
+    reg[29]: b29  // if in ALU mode, this is for inverting bits in A register
+    reg[28]: b28  // if in ALU mode, this bit is for inverting the value in second register (Binvert) in case we want to perform a set less than, or simple subtraction
+    reg[27]: b27  // opcode for the CPU
+    reg[26]: b26  // opcode for the CPU
+    
+    
+    Example of a load instruction directly into register A:
+    
+    * In assembly:
+      load @40      #load value in RAM[40] into register A
+      
+    * In machine code:
+      010001 .............
+      
+    Example of add instruction between two dedicated register:
+    
+    * In assembly:
+      add @1 @20 
+      
+      
+      
+================================================================================
