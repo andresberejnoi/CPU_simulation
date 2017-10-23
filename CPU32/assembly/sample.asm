@@ -1,3 +1,5 @@
+#This assembly code is obsolete.
+
 #This program implements a simple loop. It assumes that there is a halt instruction 
 #at memory location 99 (RAM[99]) but there are probably better ways to set this up.
 #I am also making the assumption that the first 100 memory locations are for instructions (0-99)
