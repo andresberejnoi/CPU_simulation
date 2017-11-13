@@ -11,7 +11,7 @@
 #how do I define a null terminator? maybe as 0xfc000000 (i.e. 0b1111 1100 0000 0000 ....)
 
 #load constants (no addi instruction yet)
-laodi 1
+loadi 1
 save @1
 
 loadi 0

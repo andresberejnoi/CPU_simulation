@@ -7,7 +7,7 @@
 void read_bin_file(char * filename){
     char line[20];
     FILE *file;             //file pointer
-    unsigned int hex_instruction, ram_index;
+    uint16_t hex_instruction, ram_index;
     ram_index = start_PC();
     
     file = fopen(filename,"rt");

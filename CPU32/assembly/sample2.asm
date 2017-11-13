@@ -1,8 +1,6 @@
 #This program implements a simple loop. It assumes that there is a halt instruction 
 #at memory location 99 (RAM[99]) but there are probably better ways to set this up (yeah, I just
 # added a halt instruction).
-#I am also making the assumption that the first 100 memory locations are for instructions (0-99)
-# data starts at memory location 100
 
 #Setting the number of times we want the program to loop
 loadi 10    #load inmediate value 10 into register A. This is the control loop constant

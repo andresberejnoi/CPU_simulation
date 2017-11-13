@@ -72,3 +72,15 @@ int fullAdder32(int reg_a,int reg_b, int carryIn, int *carryOut){
     */
     return output;
 }
+
+unsigned int barrel_shifter32(unsigned int reg_a, unsigned int shift_ammount, int direction){
+    unsigned int output;
+    
+    unsigned int A_temp, B_temp, C_temp, D_temp;
+    
+    //first layer of multiplexers
+    
+    
+    
+    return output;
+}
