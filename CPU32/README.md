@@ -16,6 +16,6 @@ python asm_parser_v0.4.py <source code> <output file>
 To run the simulation, simply do:
 
 ```sh
-./computer <inpute assembled program>
+./computer <input assembled program>
 ```
 
