@@ -4,58 +4,72 @@
 #include "bases.h"
 #include "bit_tools.h"
 #include "print_tools.h"
+#include "stdint.h"
+#include "cpu.h"
 
 
-unsigned int fetch_instruction(int address){
-    unsigned int inst;
+//Allocate space for general purpose registers in the cpu
+uint16_t REGS[NUM_REGISTERS];
+
+uint16_t fetch_instruction(uint16_t address){
+    uint16_t inst;
     
     inst = read_ram(address);
     return inst;
 }
 
-unsigned int decode(unsigned int instruction, unsigned int mask, int shift){
-    unsigned int output;
+uint16_t decode(uint16_t instruction, uint16_t mask, uint16_t shift){
+    uint16_t output;
     output = (instruction & mask) >> shift;
     //printf("Decode Output: %#08x\n",output);
     return output;
 }
 
-void increment_PC(int * PC){
+void increment_PC(uint16_t * PC){
     *PC = *PC + 1;
 }
 
-void jump_PC(int *PC, unsigned int new_address){
+void jump_PC(uint16_t *PC, uint16_t new_address){
     *PC = INIT_OFFSET + new_address;
 }
 
 void CPU(){
-    unsigned int instruction;
-    unsigned int PC;    //initialize the program counter
-    unsigned int MAR;   //Memory Address Register
-    unsigned int DRR;   //Data Read Register
-    unsigned int A;     //A register that will be used mainly by the ALU
-    unsigned int inst_bits, inst_mode, Binvert, Ainvert, alu_off_flag, opcode;
-    unsigned int address, short_address_one, short_address_two, dest_address;
+    uint16_t instruction;
+    uint16_t PC;    //initialize the program counter
+    uint16_t MAR;   //Memory Address Register
+    uint16_t DRR;   //Data Read Register
+    uint16_t A;     //A register that will be used mainly by the ALU
+    uint16_t inst_bits, inst_mode, Binvert, Ainvert, alu_off_flag, opcode;
+    uint16_t address, short_address_one, short_address_two, dest_address;
     
-    int carryOut;     //This bit will be set to 1 if the arithmetic result of the ALU has a carry at the end of the operation
-    int overflow;     //this flag is set by the ALU when overflow occurs
-    int zr;           //this flag will be set to 1 by the ALU if all the bits in result are 0
+    uint16_t carryOut;     //This bit will be set to 1 if the arithmetic result of the ALU has a carry at the end of the operation
+    uint16_t overflow;     //this flag is set by the ALU when overflow occurs
+    uint16_t zr;           //this flag will be set to 1 by the ALU if all the bits in result are 0
     
     
     /***************************************************************************/
+    //instruction: 0b 0000 0000 0000 0000
+    //                1111 1--- ---- ----   //opcode
+    //                ---- -111 1111 11--   //general purpose registers (3 of them and there are 8 registers, so we need 3 bits for each)
+    //                ---- ---- ---1 111-   //shift ammount (for shift instructions)
+    //                ---- ---- ---1 1111   //space for inmediate field
+    
+    //             0x  f    8    0    0
+    //                 0    7    f    c
+    //                 0    0    1    e
+    //                 0    0    1    f
+    //Declare masks for decoding phase
+    //uint_16 opcode = 0xf800;
     //Declare masks to quickly decode instructions that arrive at the CPU
-    unsigned int inst_shift=26,opcode_shift=0, Binvert_shift=2, Ainvert_shift=3;
-    unsigned int mask_instruction = 0xfc000000;
-    unsigned int mask_opcode = 0x00000003;
-    unsigned int mask_Binvert = 0x00000004;
-    unsigned int mask_Ainvert = 0x00000008;
+    uint16_t opcode_shift=11;
+    uint16_t mask_opcode = 0xf800;
     
     //Address masks
-    int long_addr_shift=0, sh_addr1_shift=21, sh_addr2_shift=16,dest_addr_shift=0;
-    unsigned int mask_long_address = 0x03ffffff;
-    unsigned int mask_short_address_one = 0x03e00000;
-    unsigned int mask_short_address_two = 0x001f0000;
-    unsigned int mask_destination_address = 0x0000ffff;
+    uint16_t inmediate_shift=0, sh_r1_shift=8, sh_r2_shift=6;
+    uint16_t mask_inmediate_field = 0x00;
+    uint16_t mask_r1 = 0x03e00;
+    uint16_t mask_short_address_two = 0x001f;
+    uint16_t mask_destination_address = 0x0000;
     
     /***************************************************************************/
     PC = start_PC();   //the program counter points to the beginning of the program

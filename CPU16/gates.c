@@ -3,44 +3,44 @@
 #include "bit_tools.h"
 
 
-int AND(int a, int b){
-    int output = a & b;     //*bitwise  AND on a and b integers
+uint16_t AND(uint16_t a, uint16_t b){
+    uint16_t output = a & b;     //*bitwise  AND on a and b uint16_tegers
     return output; 
 } 
 
-int OR(int a, int b){
-    int output = a | b;
+uint16_t OR(uint16_t a, uint16_t b){
+    uint16_t output = a | b;
     return output;
 }
 
-int NOT(int a){
-    int output = ~a;
+uint16_t NOT(uint16_t a){
+    uint16_t output = ~a;
     return output;
 }
 
-int NAND(int a, int b){
-    int output = AND(a,b);
+uint16_t NAND(uint16_t a, uint16_t b){
+    uint16_t output = AND(a,b);
     output = NOT(output);
     
     return output;
 }
 
-int NOR(int a, int b){
-    int output;
+uint16_t NOR(uint16_t a, uint16_t b){
+    uint16_t output;
     
     output = ~(a|b);
     return output;
 }
-int XOR(int a, int b){
-    int output = a^b;
+uint16_t XOR(uint16_t a, uint16_t b){
+    uint16_t output = a^b;
     return output;
 }
 
 
-int MUX2way(int A, int B, int bit_select){
-    int output;
+uint16_t MUX2way(uint16_t A, uint16_t B, uint16_t bit_select){
+    uint16_t output;
     bit_select = fill_register(bit_select);         //make all the bits in the register equal
-    //printf("Register B: ");
+    //pruint16_tf("Register B: ");
     //bin32(B);
     output = (A & ~bit_select) | (B & bit_select);    //error when flipping bits (sign extension on the selector bit should fix it, I think)
     //output = OR( AND(A,NOT(bit_select)), AND(B,bit_select));  //using homemade gates
@@ -57,30 +57,30 @@ int MUX2way(int A, int B, int bit_select){
     
     /*
     //DEBUGGING
-    int partA,partB;
-    int inverted_select = ~twos_complement(bit_select);
+    uint16_t partA,partB;
+    uint16_t inverted_select = ~twos_complement(bit_select);
     partA = (A & inverted_select);
-    printf("AND for first input A:\n");
-    bin32(A); bin32(inverted_select); line_print();bin32(partA);
-    printf("\n");
+    pruint16_tf("AND for first input A:\n");
+    bin32(A); bin32(inverted_select); line_pruint16_t();bin32(partA);
+    pruint16_tf("\n");
     partB = (B & bit_select);
-    printf("AND for Second input B:\n");
-    bin32(B); bin32(bit_select); line_print();bin32(partB);
-    printf("\n");
+    pruint16_tf("AND for Second input B:\n");
+    bin32(B); bin32(bit_select); line_pruint16_t();bin32(partB);
+    pruint16_tf("\n");
     output = partA | partB;
-    printf("OR between inputs:\n");
-    bin32(partA); bin32(partB); line_print(); bin32(output);
+    pruint16_tf("OR between inputs:\n");
+    bin32(partA); bin32(partB); line_pruint16_t(); bin32(output);
     */
     
     
-    //printf("Output reg: ");
+    //pruint16_tf("Output reg: ");
     //bin32(output);
     return output;
 } 
 
-int MUX4way(int A, int B, int C, int D, int select){
-    int output;
-    int Atemp,Btemp,sel;
+uint16_t MUX4way(uint16_t A, uint16_t B, uint16_t C, uint16_t D, uint16_t select){
+    uint16_t output;
+    uint16_t Atemp,Btemp,sel;
     
     //First MUX layer
     sel = get_bit(select,0);
@@ -95,10 +95,10 @@ int MUX4way(int A, int B, int C, int D, int select){
     return output;
 }
 
-int MUX8way(int A,int B,int C,int D,int E,int F,int G,int H, int select){
+uint16_t MUX8way(uint16_t A,uint16_t B,uint16_t C,uint16_t D,uint16_t E,uint16_t F,uint16_t G,uint16_t H, uint16_t select){
     //control: for now, it contains 8 inputs and 4 selection bits
-    int output,sel;
-    int Atemp,Btemp,Ctemp,Dtemp;    //re-usable temporary registers
+    uint16_t output,sel;
+    uint16_t Atemp,Btemp,Ctemp,Dtemp;    //re-usable temporary registers
     
     
     //First layer of 2-way multiplexers
@@ -120,11 +120,11 @@ int MUX8way(int A,int B,int C,int D,int E,int F,int G,int H, int select){
     return output;
 }
 
-int MUX16way(int A,int B,int C,int D,int E,int F,int G,int H,int L,int M,int N,int O,int P,int Q,int R,int S, int select){
-    int output,final_select;
-    int Atemp, Btemp;
+uint16_t MUX16way(uint16_t A,uint16_t B,uint16_t C,uint16_t D,uint16_t E,uint16_t F,uint16_t G,uint16_t H,uint16_t L,uint16_t M,uint16_t N,uint16_t O,uint16_t P,uint16_t Q,uint16_t R,uint16_t S, uint16_t select){
+    uint16_t output,final_select;
+    uint16_t Atemp, Btemp;
     
-    //printf("Bit select: "); bin4(select);
+    //pruint16_tf("Bit select: "); bin4(select);
     Atemp = MUX8way(A,B,C,D,E,F,G,H,select);
     Btemp = MUX8way(L,M,N,O,P,Q,R,S,select);
     
@@ -135,7 +135,7 @@ int MUX16way(int A,int B,int C,int D,int E,int F,int G,int H,int L,int M,int N,i
 }
 
 
-int DeMUX2way(int A, int select_bit){
+uint16_t DeMUX2way(uint16_t A, uint16_t select_bit){
     
     return 0;
 }

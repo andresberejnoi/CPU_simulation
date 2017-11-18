@@ -1,21 +1,21 @@
-int AND(int, int);
+uint16_t AND(uint16_t, uint16_t);
 
-int OR(int, int);
+uint16_t OR(uint16_t, uint16_t);
 
-int XOR(int, int);
+uint16_t XOR(uint16_t, uint16_t);
 
-int NOT(int);
+uint16_t NOT(uint16_t);
 
-int NAND(int, int);
+uint16_t NAND(uint16_t, uint16_t);
 
-int NOR(int, int);
+uint16_t NOR(uint16_t, uint16_t);
 
-int MUX2way(int, int, int); //multiplexer for two 32-bit inputs and 1-bit select line
-int MUX4way(int, int, int, int, int);
-int MUX8way(int, int, int, int, int, int, int, int, int);
-int MUX16way(int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int);
+uint16_t MUX2way(uint16_t, uint16_t, uint16_t); //multiplexer for two 32-bit inputs and 1-bit select line
+uint16_t MUX4way(uint16_t, uint16_t, uint16_t, uint16_t, uint16_t);
+uint16_t MUX8way(uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t);
+uint16_t MUX16way(uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t);
 
-int DeMUX2way(int, int); //demultiplexer
+uint16_t DeMUX2way(uint16_t, uint16_t); //demultiplexer
 
-int left_bitshifter(int,int);
-int right_bitshifter(int, int);
+uint16_t left_bitshifter(uint16_t,uint16_t);
+uint16_t right_bitshifter(uint16_t, uint16_t);

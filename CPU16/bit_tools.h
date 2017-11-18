@@ -1,14 +1,15 @@
+#include "stdint.h"
 //setter functions
-unsigned int set_bit_on(int, int);
-unsigned int set_bit_off(int, int);
-unsigned int flip_one_bit(int, int);
+uint16_t set_bit_on(uint16_t, uint16_t);
+uint16_t set_bit_off(uint16_t, uint16_t);
+uint16_t flip_one_bit(uint16_t, uint16_t);
 
 //getter functions
-unsigned int get_bit(int, int);
-unsigned int get_msb(int);  //output most significant bit from register
-unsigned int get_lsb(int);  //output least significant bit from register
+uint16_t get_bit(uint16_t, uint16_t);
+uint16_t get_msb(uint16_t);  //output most significant bit from register
+uint16_t get_lsb(uint16_t);  //output least significant bit from register
 
 //Others
-int twos_complement(int);
-unsigned int fill_register (int);
+int16_t twos_complement(uint16_t);
+uint16_t fill_register (uint16_t);
 

@@ -5,11 +5,11 @@
 //For Debugging
 #include <stdio.h>
 #include "bases.h"
-#include "print_tools.h"
+#include "pruint16_t_tools.h"
 
-void halfAdder(int a, int b, int *sum_bit, int *carryOut){
-    int output;
-    //int sum_bit,carryOut;
+void halfAdder(uint16_t a, uint16_t b, uint16_t *sum_bit, uint16_t *carryOut){
+    uint16_t output;
+    //uint16_t sum_bit,carryOut;
     
     //sum_bit = XOR(a,b);
     //carryOut = AND(a,b);
@@ -21,10 +21,10 @@ void halfAdder(int a, int b, int *sum_bit, int *carryOut){
     //return output;
 }
 
-void fullAdder(int a, int b, int carryIn,int *output, int *finalCarry){
+void fullAdder(uint16_t a, uint16_t b, uint16_t carryIn,uint16_t *output, uint16_t *finalCarry){
     //a and b are single bits
-    int sum_carry;
-    int carryOut1, carryOut2, sum_bit;
+    uint16_t sum_carry;
+    uint16_t carryOut1, carryOut2, sum_bit;
     
     halfAdder(a,b, &sum_bit, &carryOut1);             //sum_carry has both carry and sum bits. Most significant bit is carry and least sig. bit is sum
     //sum_bit = get_bit(sum_bit,0);
@@ -40,34 +40,34 @@ void fullAdder(int a, int b, int carryIn,int *output, int *finalCarry){
     //return output;
 }
 
-int fullAdder32(int reg_a,int reg_b, int carryIn, int *carryOut){
-    int output, temp_out;
-    int bit_a, bit_b, sum_bit, i;
+uint16_t fullAdder32(uint16_t reg_a,uint16_t reg_b, uint16_t carryIn, uint16_t *carryOut){
+    uint16_t output, temp_out;
+    uint16_t bit_a, bit_b, sum_bit, i;
     output = 0;
     
-    //header_print("Initial State");
-    //printf("carryIn: %d\ncarryOut: %d\n",carryIn, *carryOut);
+    //header_pruint16_t("Initial State");
+    //pruint16_tf("carryIn: %d\ncarryOut: %d\n",carryIn, *carryOut);
     
-    //printf("DEBUGGING FULL 32-BIT ADDER:\n");
-    //printf("| A | B | Ci|| Co| S |\n");
-    //printf("---------------------\n");
+    //pruint16_tf("DEBUGGING FULL 32-BIT ADDER:\n");
+    //pruint16_tf("| A | B | Ci|| Co| S |\n");
+    //pruint16_tf("---------------------\n");
     
     
-    for (i=0;i<32;i++){
+    for (i=0;i<16;i++){
         bit_a = get_bit(reg_a,i);
         bit_b = get_bit(reg_b,i);
         
         fullAdder(bit_a,bit_b,carryIn,&temp_out,carryOut);
         output = output | (temp_out << i);
 
-        //printf("Adding %d + %d; bit %d: ",bit_a,bit_b,i); bin32(output);
-        //printf("| %d | %d | %d || %d | %d |\n",bit_a,bit_b,carryIn,*carryOut,temp_out);
+        //pruint16_tf("Adding %d + %d; bit %d: ",bit_a,bit_b,i); bin32(output);
+        //pruint16_tf("| %d | %d | %d || %d | %d |\n",bit_a,bit_b,carryIn,*carryOut,temp_out);
         carryIn = *carryOut;
     }
     
     /*
     if (*carryOut == 1){
-        printf("WARNING: OVERFLOW OCCURED!\n");
+        pruint16_tf("WARNING: OVERFLOW OCCURED!\n");
     }
     */
     return output;

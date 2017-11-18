@@ -4,9 +4,9 @@
 #include "bases.h"
 
 //Start RAM
-int RAM[RAM_SIZE];
+uint16_t RAM[RAM_SIZE];
 
-void init_ram(int seed){
+void init_ram(uint16_t seed){
     int i;
     for(i=0; i<RAM_SIZE; ++i){
         RAM[i] = seed;
@@ -14,18 +14,18 @@ void init_ram(int seed){
     printf("RAM initialized with seed: %d\n",seed);
 }
 
-int start_PC(){
+uint16_t start_PC(){
     return INIT_OFFSET;
 }
 
-void write_ram(int value, int address){
+void write_ram(uint16_t value, uint16_t address){
     if (address<RAM_SIZE){
         RAM[address] = value;
     }
 }
 
-int read_ram(int address){
-    int value;
+uint16_t read_ram(uint16_t address){
+    uint16_t value;
     
     if (address<RAM_SIZE){
         value = RAM[address];
@@ -38,7 +38,7 @@ int read_ram(int address){
 }
 
 //Show values in registers in the range specified (inclusive)
-void show_ram(int start_address, int end_address){
+void show_ram(uint16_t start_address, uint16_t end_address){
     int i;
     for(i=start_address; i<=end_address; ++i){
         printf("Register %03d: %010u  ",i, read_ram(i)); hex32(read_ram(i));

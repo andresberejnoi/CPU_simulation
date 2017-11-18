@@ -21,8 +21,8 @@ const char *hex_conv[16] = {
  * Print the hex representation of int 'a' in 32 bits.
  * A 32 bit number in hex needs 8 digits
  */
-void hex32(int a){
-    int dig1,dig2,dig3,dig4,dig5,dig6,dig7,dig8;
+void hex32(uint16_t a){
+    uint16_t dig1,dig2,dig3,dig4,dig5,dig6,dig7,dig8;
     
     dig1 = (a & 0x0000000f) >>  0;
     dig2 = (a & 0x000000f0) >>  4;
@@ -37,19 +37,19 @@ void hex32(int a){
     
 }
 
-void hex16(int a){
-    int dig1, dig2, dig3, dig4;
+void hex16(uint16_t a){
+    uint16_t dig1, dig2, dig3, dig4;
     
-    dig1 = (a & 0x0000000f) >>  0;
-    dig2 = (a & 0x000000f0) >>  4;
-    dig3 = (a & 0x00000f00) >>  8;
-    dig4 = (a & 0x0000f000) >> 12;
+    dig1 = (a & 0x000f) >>  0;
+    dig2 = (a & 0x00f0) >>  4;
+    dig3 = (a & 0x0f00) >>  8;
+    dig4 = (a & 0xf000) >> 12;
     
     printf("0x%s%s%s%s\n",hex_conv[dig4],hex_conv[dig3],hex_conv[dig2],hex_conv[dig1]);
 }
 
-void bin32(int a){
-    int dig1,dig2,dig3,dig4,dig5,dig6,dig7,dig8;
+void bin32(uint16_t a){
+    uint16_t dig1,dig2,dig3,dig4,dig5,dig6,dig7,dig8;
     
     dig1 = (a & 0x0000000f) >>  0;
     dig2 = (a & 0x000000f0) >>  4;
@@ -64,33 +64,33 @@ void bin32(int a){
 
 }
 
-void bin16(int a){
-    int dig1, dig2, dig3, dig4;
+void bin16(uint16_t a){
+    uint16_t dig1, dig2, dig3, dig4;
     
-    dig1 = (a & 0x0000000f) >>  0;
-    dig2 = (a & 0x000000f0) >>  4;
-    dig3 = (a & 0x00000f00) >>  8;
-    dig4 = (a & 0x0000f000) >> 12;
+    dig1 = (a & 0x000f) >>  0;
+    dig2 = (a & 0x00f0) >>  4;
+    dig3 = (a & 0x0f00) >>  8;
+    dig4 = (a & 0xf000) >> 12;
     
     printf("0x%s %s %s %s\n",bin_conv[dig4],bin_conv[dig3],bin_conv[dig2],bin_conv[dig1]);
 
 }
 
 
-void bin8(int a){
-    int dig1, dig2;
+void bin8(uint16_t a){
+    uint16_t dig1, dig2;
     
-    dig1 = (a & 0x0000000f) >> 0;
-    dig2 = (a & 0x000000f0) >> 4;
+    dig1 = (a & 0x000f) >> 0;
+    dig2 = (a & 0x00f0) >> 4;
     
     printf("0x%s %s\n",bin_conv[dig2],bin_conv[dig1]);
 
 }
 
-void bin4(int a){
-    int dig1;
+void bin4(uint16_t a){
+    uint16_t dig1;
     
-    dig1 = (a & 0x0000000f) >> 0;
+    dig1 = (a & 0x000f) >> 0;
 
     printf("0b %s\n",bin_conv[dig1]);
 

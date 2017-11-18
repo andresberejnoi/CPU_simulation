@@ -5,9 +5,9 @@
 #include "alu.h"
 #include "bit_tools.h"
 
-int ALU(int A_reg, int B_reg, int opcode, int Binvert, int *carryOut, int *zr, int *overflow_bit){
-    int output, sum_result, ng_full, xor_b,set_less_than;
-    int ANDed,ORed;
+uint16_t ALU(uint16_t A_reg, uint16_t B_reg, uint16_t opcode, uint16_t Binvert, uint16_t *carryOut, uint16_t *zr, uint16_t *overflow_bit){
+    uint16_t output, sum_result, ng_full, xor_b,set_less_than;
+    uint16_t ANDed,ORed;
     ng_full = fill_register(Binvert);          // I will need 32 bit ng wires for the XOR gates, so I create a register full of ones
     xor_b = XOR(B_reg,ng_full);           //Passing B through conditional inverter gate
     
@@ -44,7 +44,7 @@ int ALU(int A_reg, int B_reg, int opcode, int Binvert, int *carryOut, int *zr, i
     // at the end:
     
     /*
-    int i,cur_bit,next_bit,neg_AND_result;
+    uint16_t i,cur_bit,next_bit,neg_AND_result;
     
     cur_bit = get_bit(output, 0);
     next_bit = get_bit(output, 1);
@@ -69,34 +69,34 @@ int ALU(int A_reg, int B_reg, int opcode, int Binvert, int *carryOut, int *zr, i
     return output;
 }
 
-int ALU_old(int A_reg, int B_reg, int control_bits){
+uint16_t ALU_old(uint16_t A_reg, uint16_t B_reg, uint16_t control_bits){
     
-    //int A_reg, B_reg, result;       //declaring two registers that the ALU can use
+    //uint16_t A_reg, B_reg, result;       //declaring two registers that the ALU can use
     
-    //Here load corresponding values into the registers
+    //Here load corresponding values uint16_to the registers
     
-    //ALU operations are calculated next and then passed into a 16-way mux gate
+    //ALU operations are calculated next and then passed uint16_to a 16-way mux gate
     //logical operations
-    int ALU_AND = AND(A_reg,B_reg);             //selected by 0000
-    int ALU_OR = OR(A_reg, B_reg);
-    int ALU_NOT = NOT(A_reg);
-    int ALU_XOR = XOR(A_reg, B_reg);
-    int ALU_ZERO = 0;
-    int ALU_EQUAL_THAN = 0;
-    int ALU_LESS_THAN = 0;
-    int ALU_GREATER_THAN = 0;
+    uint16_t ALU_AND = AND(A_reg,B_reg);             //selected by 0000
+    uint16_t ALU_OR = OR(A_reg, B_reg);
+    uint16_t ALU_NOT = NOT(A_reg);
+    uint16_t ALU_XOR = XOR(A_reg, B_reg);
+    uint16_t ALU_ZERO = 0;
+    uint16_t ALU_EQUAL_THAN = 0;
+    uint16_t ALU_LESS_THAN = 0;
+    uint16_t ALU_GREATER_THAN = 0;
     
     //Arithmetic operations
-    int ALU_ADD = A_reg + B_reg;
-    int ALU_SUB = 0;
-    int UND = 0;
-    int UND2 = 0;
-    int UND3 = 0;
-    int UND4 = 0;
-    int UND5 = 0;
-    int UND6 = 0;
+    uint16_t ALU_ADD = A_reg + B_reg;
+    uint16_t ALU_SUB = 0;
+    uint16_t UND = 0;
+    uint16_t UND2 = 0;
+    uint16_t UND3 = 0;
+    uint16_t UND4 = 0;
+    uint16_t UND5 = 0;
+    uint16_t UND6 = 0;
     
-    int result = MUX16way(ALU_ADD,ALU_OR,ALU_NOT,ALU_XOR,ALU_ZERO,ALU_EQUAL_THAN,ALU_LESS_THAN,ALU_GREATER_THAN,ALU_ADD,ALU_SUB,UND,UND2,UND3,UND4,UND5,UND6,control_bits);
+    uint16_t result = MUX16way(ALU_ADD,ALU_OR,ALU_NOT,ALU_XOR,ALU_ZERO,ALU_EQUAL_THAN,ALU_LESS_THAN,ALU_GREATER_THAN,ALU_ADD,ALU_SUB,UND,UND2,UND3,UND4,UND5,UND6,control_bits);
     
     return result;
 }

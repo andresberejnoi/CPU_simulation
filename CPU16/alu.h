@@ -1,2 +1,2 @@
-int ALU_old(int, int, int);
-int ALU(int , int , int , int , int *, int *, int *);
+uint16_t ALU_old(uint16_t, uint16_t, uint16_t);
+uint16_t ALU(uint16_t , uint16_t , uint16_t , uint16_t , uint16_t *, uint16_t *, uint16_t *);

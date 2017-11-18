@@ -1,3 +1,3 @@
-void halfAdder(int, int, int *, int *);
-void fullAdder(int, int, int, int *, int *);
-int fullAdder32(int, int, int, int *);
+void halfAdder(uint16_t, uint16_t, uint16_t *, uint16_t *);
+void fullAdder(uint16_t, uint16_t, uint16_t, uint16_t *, uint16_t *);
+uint16_t fullAdder32(uint16_t, uint16_t, uint16_t, uint16_t *);
