@@ -3,7 +3,7 @@
 This is a simulation of a 32-bit processor and it is a work in progress. The main goal of the project is to learn more
 about computer architecture. There are some sample assembly language programs as well as their assembled versions.
 
-##Generate CPU executable
+## Generate CPU executable
 Run make on this directory to generate the executable 'computer'
 
 ## How to Assemble Code
